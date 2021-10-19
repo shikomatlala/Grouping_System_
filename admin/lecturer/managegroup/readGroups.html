@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSO34BT GROUPS</title>
+</head>
+<body>
+    
+
+    <button id='button'>Load Groups</button>
+    <br><br>
+    <div id="groups">Groups</div>
+    <script>
+        document.getElementById("button").addEventListener('click', loadGroups);
+        //Now the thing that I want to do is to make sure that when we click view delete groups we can get all this information that we re looking for overhere.
+        //Load DSO GROUPS
+        function loadGroups(){
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost/dashboard/grouping_system/users/admin/lecturer/managegroup/posts/readAllGroups.php', true);
+            xhr.onload = function(){
+                if(this.status = 200)
+                {
+                    var groups = JSON.parse(this.responseText);
+
+                    // console.log(groups);
+                    //OUTPUT THE INFORMATION TO THE BROWSER
+                    var output = '';
+                    output += '<ul>';
+                    for(var i in groups)
+                    {
+
+                        output +='<li>' + groups[i].group_id+ ' | ' + groups[i].group_name + ' | ' + groups[i].count_member +'</li>';
+
+                    }
+                    output +='</ul>'; 
+                    document.getElementById("groups").innerHTML = output;
+
+                }
+            }
+
+
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
